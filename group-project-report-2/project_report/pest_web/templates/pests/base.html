@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <title>PlantShield</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% load static %}
+    {% block css %}
+    <link rel="stylesheet" href="{%static 'css/style.css'%}">
+    
+    {% endblock css %}
+</head>
+<body>
+    <!-- Header is start here  -->
+        <header class="Start">
+            <div class="lefty">
+                <a href="{% url 'home' %}">
+                    <img src="{% static 'images/logo.png' %}" class="go" alt="PlantShield Logo">
+                </a>
+                <span class="site">PlantShield</span>
+            </div>
+
+
+           <!-- here is a hamburger menu button for responsiveness  -->
+            <button class="small"  id="big">☰</button>
+
+
+
+           <nav class="pages" id="edit">
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'pest_list' %}">Pests</a>
+            <a href="{% url 'about' %}">About</a>
+
+            
+           </nav>
+        </div>
+    </header>
+    <!-- Header ends here  -->
+
+    <!-- Main content is start here  -->
+    <div>
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <!-- footer starts here  -->
+    <footer>
+        <p>&copy; 2025 PlantShield – All rights reserved.</p>
+
+    </footer>
+
+    <!-- javascript added  -->
+    <script src="{% static 'js/main.js' %}"></script>
+
+</body>
+</html>

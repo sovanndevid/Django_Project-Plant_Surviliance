@@ -1,0 +1,506 @@
+/* Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* === Header Navigation === */
+.Start{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2C4A3F;
+    padding: 15px 40px;
+    color: #FDF5E6;
+}
+
+.lefty {
+    display: flex;
+    align-items: center;
+}
+
+.go {
+    width: 70px;
+    height: auto;
+    margin-right: 15px;
+}
+
+.site {
+    font-size: 28px;
+    font-weight: bold;
+    color: #FDF5E6;
+    letter-spacing: 1px;
+}
+
+.pages a {
+    color: #FDF5E6;
+    text-decoration: none;
+    margin-left: 30px;
+    font-size: 28px;
+    font-weight: 600;
+    transition: color 0.5s ease;
+}
+
+.pages a:hover {
+    color: #A7D49B; 
+}
+
+
+/* responsive navbar  */
+.small{
+    display: none;
+    background: none;
+    border: none;
+    font-size: 32px;
+    color: #FDF5E6;
+    cursor: pointer;
+}
+
+/* mobile device */
+@media (max-width:768px)  {
+   .Start{
+    flex-wrap: wrap;
+    padding: 15px 20px;
+   }
+    .small{
+        display: block;
+
+    }
+    .pages{
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-top: 10px;
+    }
+    .pages a{
+        margin: 10px 0;
+        font-size: 22px;
+    }
+    .pages.show{
+        display: flex;
+    }
+}
+
+
+
+/* Footer */
+footer {
+    background-color: #203A2F;
+    color: #F8F5D7;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 14px;
+}
+
+
+
+
+
+/* === Hero Section === */
+.zero {
+    padding: 20px;
+    background: linear-gradient(45deg,
+        rgb(245, 234, 245),
+        rgb(248, 235, 235),
+        rgb(245, 238, 223),
+        rgb(246, 246, 218),
+        rgb(229, 246, 229),
+        rgb(219, 219, 246),
+        rgb(241, 234, 247),
+        rgb(247, 234, 247));
+}
+.one1 {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+.new1 {
+    flex: 1;
+    padding: 30px;
+    text-align: left;
+    font-weight: bold;
+}
+.new1 h1 {
+    color: #4E3620;
+    font-size: 3.3rem;
+    margin-top: 90px;
+    line-height: 3.3rem;
+}
+.new1 p {
+    font-size: 1.8rem;
+    line-height: 2.5rem;
+}
+.button1{
+
+    background-color: #2C4A3F;
+    border: 2px solid #2C4A3F;
+    border-radius: 20px;
+    display: inline-block;
+    padding: 15px 32px;
+
+}
+.button1 a {
+    color: white;
+    font-size: 22px;
+    text-decoration: none;
+}
+.button1:hover{
+    background-color: #A7D49B;
+    border-color: #A7D49B;
+}
+.button1 a:hover{
+    color: black;
+
+}
+
+/* === Hero Image Section === */
+.new3 {
+    flex: 1;
+    padding: 30px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.imgg {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    justify-items: center;
+}
+.img1 {
+    width: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* responsiveness for home page  */
+@media (max-width: 1024px) {
+    .new1 h1 {
+        font-size: 3rem;
+        line-height: 2.8rem;
+        margin-top: 60px;
+
+    }
+    .new p{
+        font-size: 1.6rem;
+        line-height: 2.2rem;
+
+    }
+    .button1 a{
+        font-size: 20px;
+        padding: 12px 28px;
+
+    }
+
+}
+
+@media (max-width:768px){
+    .one1{
+        flex-direction: column;
+        align-items: center;
+
+    }
+    .new1{
+        text-align: center;
+        padding: 20px;
+
+    }
+    .new1 h1{
+        font-size: 2.2rem;
+        line-height: 2.5rem;
+        margin-top: 20px;
+
+    }
+    .new1 p{
+        font-size: 1.2rem;
+        line-height: 1.8rem;
+
+
+    }
+    .button1 a{
+        font-size: 18px;
+        padding: 10px 24px;
+
+    }
+    .new3{
+        padding : 10px;
+
+    }
+    .imgg{
+        grid-template-columns: 1fr;
+
+    }
+}
+@media (max-width:480px){
+    .new1 h1{
+        font-size: 1.8rem;
+        line-height: 2.2rem;
+    }
+    .new1 p{
+        font-size: 1 rem;
+        line-height: 1.6rem;
+
+    }
+    .img1{
+        width: 90%;
+
+    }
+    .button1 a{
+        font-size: 16px;
+        padding: 8px 20px;
+
+    }
+}
+
+
+
+
+
+
+
+/* === About Section === */
+.about1 {
+    position: absolute;
+    top: 45%;
+    right: 15%;
+}
+.newone {
+    text-align: center;
+    font-size: 38px;
+}
+.friends {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+.friend1 {
+    background: #f4f4f4;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+.friend1 h3 {
+    color: #4E3620;
+    font-size: 39px;
+    margin-bottom: 5px;
+}
+.friend1 p {
+    font-size: 16px;
+}
+
+@media(max-width:600px){
+    .newone {
+        font-size: 1.6rem;
+    }
+
+    .friend1 h3 {
+        font-size: 1.3rem;
+    }
+
+    .friend1 p {
+        font-size: 0.95rem;
+    }
+    .about1{
+        position: static;
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+    }
+    .friends{
+        flex-direction: column;
+        align-items: center;
+    }
+    .ground{
+        display: none;
+    }
+}
+
+
+
+
+/* === Pest Listing === */
+.head1 {
+    text-align: center;
+    font-size: 45px;
+}
+
+/* === Pest Cards === */
+.box {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 25px;
+    padding: 20px;
+    list-style: none;
+}
+.list1 {
+    text-align: center;
+    height: 290px;
+}
+.list1 a {
+    font-size: 2.5rem;
+    color: #4E3620;
+    font-weight: bolder;
+    text-decoration: none;
+}
+.list1 p {
+    font-size: 26px;
+}
+.list1:hover {
+    border: 5px solid rgb(233, 221, 221);
+    border-radius: 20px;
+}
+.list1 a:hover {
+    color: green;
+}
+.list1 button {
+    font-size: 20px;
+    display: inline-block; /* make it visible */
+    background-color: #2C4A3F; /* solid background */
+    border: none;
+    color: white; /* text color */
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.list1 button:hover {
+    background-color: #A7D49B;
+    color: black;
+}
+
+
+/* responsive design for pestlist page  */
+@media (max-width: 768px) {
+    .head1{
+        font-size: 30px;
+        padding: 10px;
+
+    }
+    .box{
+        grid-template-columns: 1fr;
+        padding: 10px;
+
+    }
+    .list1{
+        height: auto;
+        padding: 15px;
+
+    }
+    .list1 a{
+        font-size: 1.5rem;
+
+
+    }
+    .list1 p{
+        font-size: 18px;
+        line-height: 1.5rem;
+    }  
+    .list1 button{
+        font-size: 16px;
+        margin-top: 10px;
+    } 
+}
+
+
+
+
+.detail {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    padding: 40px 20px;
+    align-items: flex-start;
+}
+
+.yes {
+    flex: 2;
+    font-size: 18px;
+    line-height: 1.6;
+    color: #333;
+}
+
+.yes h1 {
+    font-size: 2.8rem;
+    color: #4E3620;
+    margin-bottom: 20px;
+}
+
+.yes .italic {
+    font-style: italic;
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.info-block {
+    margin-top: 25px;
+}
+
+.info-block h3 {
+    font-size: 1.5rem;
+    color: #2C4A3F;
+    margin-bottom: 10px;
+}
+
+.info-block p {
+    margin-bottom: 10px;
+}
+
+.yes1 {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.detail-image {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.detail-image:hover {
+    transform: scale(1.02); /* subtle zoom effect on hover */
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .detail-image {
+        max-width: 90%;
+        margin-top: 20px;
+    }
+}
+@media (max-width: 768px) {
+    .detail {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .yes, .yes1 {
+      width: 100%;
+      text-align: center;
+    }
+  
+    .yes h1 {
+      font-size: 2rem;
+    }
+  
+    .info-block h3 {
+      font-size: 1.2rem;
+    }
+  }
+  

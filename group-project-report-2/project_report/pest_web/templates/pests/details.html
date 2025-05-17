@@ -1,0 +1,55 @@
+{% extends "pests/base.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="zero">
+  <div class="detail">
+    <!-- Text section -->
+    <div class="yes">
+      <h1>{{ pest.name }}: Identification, Impact & Prevention</h1>
+      <p>{{ pest.description }}</p>
+
+      <div class="info-block">
+        <h3>Binomial Name</h3>
+        <p class="italic">{{ pest.scientific_name }}</p>
+        </div>
+
+      <div class="info-block">
+        <h3>Symptoms</h3>
+        {% for item in pest.symptoms %}
+          <p>{{ item }}</p>
+        {% endfor %}
+      </div>
+
+      <div class="info-block">
+        <h3>Prevention</h3>
+        {% for item in pest.prevention %}
+          <p>{{ item }}</p>
+        {% endfor %}
+      </div>
+
+      <div class="info-block">
+        <h3>Treatment</h3>
+        {% for item in pest.treatment %}
+          <p>{{ item }}</p>
+        {% endfor %}
+      </div>
+
+     
+    </div>
+
+    <!-- Image section -->
+<div class="yes1">
+    <a href="{{ pest.image_reference }}" target="_blank">
+      <img src="{% static pest.image_url %}" alt="{{ pest.name }}" width="400" class="detail-image">
+
+    </a>
+</div>
+
+  </div>
+</div>
+{% endblock %}
