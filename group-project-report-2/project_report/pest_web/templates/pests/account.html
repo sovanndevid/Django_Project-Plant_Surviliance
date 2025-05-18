@@ -27,16 +27,25 @@
 
            <!-- here is a hamburger menu button for responsiveness  -->
             <button class="small"  id="big">☰</button>
-
-
-
            <nav class="pages" id="edit">
             <a href="{% url 'home' %}">Home</a>
             <a href="{% url 'pest_list' %}">Pests</a>
             <a href="{% url 'about' %}">About</a>
             <a href="{% url 'register' %}">Register</a> 
-
-            
            </nav>
-        </div>
-    </header>
+        
+        </header>
+
+    <div>
+        <form action="register" method="post">
+            {% csrf_token %}
+
+            <input type="text" name="first_name" placeholder="First Name"><br>
+            <input type="text" name="first_name" placeholder="Last Name"><br>
+            <input type="text" name="first_name" placeholder="Username"><br>
+            <input type="email" name="first_name" placeholder="Email"><br>
+            <input type="password" name="first_name" placeholder="Password"><br>
+            <input type="password" name="first_name" placeholder="Confirm Password"><br>
+            <input type="Submit">
+    </div> 
+</body>        
