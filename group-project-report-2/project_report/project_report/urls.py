@@ -20,7 +20,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import re_path, path
 # Adding .views because it sits in app folder
-from pest_web.views import HomeView, PestListView, PestDetailView, AboutView # built-in django classes
+from pest_web import views
+from pest_web.views import HomeView, PestListView, PestDetailView, AboutView, register # built-in django classes
 
 
 urlpatterns = [
@@ -37,6 +38,11 @@ urlpatterns = [
 
     # About view
     re_path(r'^about/$', AboutView.as_view(), name='about'),
+    
+    
+    # account
+    path('account/', views.register, name="register"),
+    
 ]
 
 

@@ -36,8 +36,9 @@ class PestDetailView(DetailView):
             raise Http404("Pest not found")
         return pest
 
-
 class AboutView(TemplateView):
     """About page view"""
     template_name = 'pests/about.html'
     
+def register(request):
+    return render(request, 'pests/account.html') 
