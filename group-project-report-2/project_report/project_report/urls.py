@@ -22,24 +22,19 @@ from django.urls import re_path, path
 # Adding .views because it sits in app folder
 from pest_web import views
 from pest_web.views import HomeView, PestDiseaseListView, PestDiseaseDetailView, AboutView, register  # fixed class names
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    # Home View (empty path) 
     path('admin/', admin.site.urls),
     re_path(r'^$', HomeView.as_view(), name='home'),
-    
-    # Pest list view: ^pests/$ to match /pests/  
     re_path(r'^pests/$', PestDiseaseListView.as_view(), name='pest_list'), 
-    
-    # Pest detail view
-    # (?P<pk\d+) == <int:pest-id>  // matches one or more digit, also primary key is mapped to pest_id
     re_path(r'^pests/(?P<pk>\d+)/s*$', PestDiseaseDetailView.as_view(), name='pest_detail'),
-
-    # About view
     re_path(r'^about/$', AboutView.as_view(), name='about'),
-    
-    # account
-    path('account/', views.register, name="register"),
+
+    # Account
+    path('register/', views.register, name="register"),
+
+    # Login/Logout
+    path('login/', auth_views.LoginView.as_view(template_name='pests/login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),
 ]
-
-

@@ -1,34 +1,39 @@
 {% extends "pests/base.html" %}
 {% load static %}
-{% block css%}
-<link rel="stylesheet" href="{%static 'css/style.css'%}">
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
 {% endblock %}
 
 {% block content %}
-
 <section class="zero">  
   <div class="one1">
       <div class="new1">
-          <h1> <b>Know the Enemy: <br> Learn About 7 Plant Pests & Diseases </b></h1> <br>
-          <P>Welcome to our project on mango pest and disease awareness. 
+          <h1><b>Know the Enemy: <br> Learn About 7 Plant Pests & Diseases</b></h1>
+          <p>Welcome to our project on mango pest and disease awareness.
             This website explores seven common threats to plant health and how we can 
-            recognize and learn about their impact.</P><br></br>
-          <div class="button1">
-              <a href="{% url 'pest_list' %}">Learn More</a>
-              
+            recognize and learn about their impact.</p>
           
-          </div>
+          {% if user.is_authenticated %}
+            <div class="button1">
+              <a href="{% url 'pest_list' %}">View Pests</a>
+              <a href="{% url 'surveillance-create' %}">Add Surveillance</a>
+            </div>
+          {% else %}
+            <p><strong>You must <a href="{% url 'login' %}">log in</a> or <a href="{% url 'register' %}">register</a> before you can record surveillance data.</strong></p>
+            <div class="button1">
+              <a href="{% url 'register' %}">Register</a>
+              <a href="{% url 'login' %}">Log In</a>
+            </div>
+          {% endif %}
       </div>
+
       <div class="new3">
         <div class="imgg">
           <img src="{% static 'images/istockphoto-1144920687-612x612.jpg' %}" class="img1">
           <img src="{% static 'images/istockphoto-1172115256-612x612.jpg' %}" class="img1">
           <img src="{% static 'images/istockphoto-601122142-612x612.jpg' %}" class="img1">
           <img src="{% static 'images/istockphoto-1372939858-612x612.jpg' %}" class="img1">
-
-
-
-
         </div>
       </div>
   </div>

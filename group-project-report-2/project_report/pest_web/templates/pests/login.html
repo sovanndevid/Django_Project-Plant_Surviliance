@@ -1,0 +1,36 @@
+{% extends 'pests/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="card shadow" style="max-width: 500px; margin: auto;">
+    <div class="card-body">
+      <h2 class="text-center mb-4">Login to PlantShield</h2>
+
+      {% if form.errors %}
+        <div class="alert alert-danger">Invalid login credentials. Please try again.</div>
+      {% endif %}
+
+      <form method="post">
+        {% csrf_token %}
+
+        <div class="mb-3">
+          {{ form.username.label_tag }}
+          {{ form.username }}
+        </div>
+
+        <div class="mb-3">
+          {{ form.password.label_tag }}
+          {{ form.password }}
+        </div>
+
+        <button type="submit" class="btn btn-success w-100">Log In</button>
+      </form>
+
+      <p class="mt-3 text-center">
+        Don't have an account? <a href="{% url 'register' %}">Register here</a>.
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}
