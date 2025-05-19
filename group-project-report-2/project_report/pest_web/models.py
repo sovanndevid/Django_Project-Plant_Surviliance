@@ -35,11 +35,35 @@ class Plant(models.Model):
     def __str__(self):
         return f"{self.name} ({self.plant_type})"
 
+# class PestDisease(models.Model):
+#     name = models.CharField(max_length=100)
+#     affected_parts = models.ForeignKey(PlantPart, on_delete=models.CASCADE)
+#     recommended_frequency = models.CharField(max_length=100)
+#     description = models.TextField(blank=True)
+#     plant_type = models.ForeignKey(PlantType, on_delete=models.CASCADE)
+
+#     def __str__(self):
+#         return self.name
+
 class PestDisease(models.Model):
-    name = models.CharField(max_length=100)
+    identifier = models.IntegerField(
+        null=False,
+        blank=False,
+        unique=True,
+        default=1,  # Temporary default for migration
+    )
+    name = models.CharField(max_length=100,default="")
+    scientific_name = models.CharField(max_length=100,default="")
+    description = models.TextField(blank=False,default="")
+    image_url = models.TextField(blank=False,default="") # Used Text Field to simplify dir
+    image_reference = models.TextField(blank=False,default="")
+    symptoms = models.TextField(blank=False,default="")
+    prevention = models.TextField(blank=False,default="")
+    treatment= models.TextField(blank=False,default="")
+    ## Need Corrections 
     affected_parts = models.ForeignKey(PlantPart, on_delete=models.CASCADE)
-    recommended_frequency = models.CharField(max_length=100)
-    description = models.TextField(blank=True)
+    recommended_frequency = models.CharField(max_length=100,default="")
+    description = models.TextField(blank=True,default="")
     plant_type = models.ForeignKey(PlantType, on_delete=models.CASCADE)
 
     def __str__(self):
