@@ -10,8 +10,8 @@ from django.utils import timezone
 
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from .models import PestDisease, PlantPart
-from .forms import PestDiseaseForm, PlantPartForm
+from .models import PestDisease, PlantPart, Farm
+from .forms import PestDiseaseForm, PlantPartForm, FarmForm, UserRegisterForm
 
 
 # Displaying a list of 7 pest diseases
@@ -30,6 +30,51 @@ class HomeView(TemplateView):
 class AboutView(TemplateView):
     """About page view"""
     template_name = 'pests/about.html'
+
+
+def register(request):
+    if request.method == 'POST':
+        user_form = UserRegisterForm(request.POST)
+        farm_form = FarmForm(request.POST)
+
+        if user_form.is_valid() and farm_form.is_valid():
+            user = user_form.save()
+            farm = farm_form.save(commit=False)
+            farm.grower = user
+            farm.save()
+            messages.success(request, "Registration successful.")
+            return redirect('login')
+    else:
+        user_form = UserRegisterForm()
+        farm_form = FarmForm()
+    
+    return render(request, 'pests/register.html', {
+        'user_form': user_form,
+        'farm_form': farm_form
+    })
+# View for logged-in users to see their farm info
+@login_required
+def farm_profile(request):
+    farm = get_object_or_404(Farm, grower=request.user)
+    return render(request, 'pests/farm_profile.html', {'farm': farm})
+
+# Edit farm info
+@login_required
+def edit_farm(request):
+    farm = get_object_or_404(Farm, grower=request.user)
+    if request.method == 'POST':
+        form = FarmForm(request.POST, instance=farm)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Farm updated.")
+            return redirect('pests/farm_profile')
+    else:
+        form = FarmForm(instance=farm)
+    return render(request, 'pests/edit_farm.html', {'form': form})
+
+
+
+ 
         
 # from .forms import (
 #     PlantTypeForm,

@@ -1,5 +1,5 @@
 from django import forms
-from .models import PestDisease, PlantPart
+from .models import PestDisease, PlantPart, Farm
 
 class PestDiseaseForm(forms.ModelForm):
     class Meta:
@@ -19,6 +19,17 @@ class PlantPartForm(forms.ModelForm):
         model = PlantPart
         fields = '__all__'
 
+class UserRegisterForm(UserCreationForm):
+    email = forms.EmailField()
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
+
+class FarmForm(forms.ModelForm):
+    class Meta:
+        model = Farm
+        fields = ['farm_name', 'size_in_hectares', 'farm_type']
 
 # class PlantTypeForm(forms.ModelForm):
 #     class Meta:

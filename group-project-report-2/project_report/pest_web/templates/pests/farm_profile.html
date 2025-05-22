@@ -1,0 +1,8 @@
+{% extends "pests/base.html" %}
+{% block content %}
+<h2>Your Farm Information</h2>
+<p><strong>Farm Name:</strong> {{ farm.farm_name }}</p>
+<p><strong>Size (hectares):</strong> {{ farm.size_in_hectares }}</p>
+<p><strong>Farm Type:</strong> {{ farm.farm_type }}</p>
+<a href="{% url 'edit_farm' %}">Edit Farm Info</a>
+{% endblock %}

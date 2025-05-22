@@ -40,6 +40,18 @@ class PestDisease(models.Model):
 
 
 
+
+
+class Farm(models.Model):
+    grower = models.OneToOneField(User, on_delete=models.CASCADE)
+    farm_name = models.CharField(max_length=200)
+    size_in_hectares = models.FloatField()
+    farm_type = models.CharField(max_length=200)
+    
+    def __str__(self):
+        return f"{self.farm_name} ({self.grower.username})"
+
+
 # Dynamic lists
 # class PlantType(models.Model):
 #     name = models.CharField(max_length=100, unique=True)
