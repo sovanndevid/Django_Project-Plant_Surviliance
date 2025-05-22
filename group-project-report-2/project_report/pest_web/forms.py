@@ -1,7 +1,24 @@
 from django import forms
-from .models import PlantType, PlantPart, Plant, PestDisease, SurveillanceRecord, Farm
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+from .models import PestDisease, PlantPart
+
+class PestDiseaseForm(forms.ModelForm):
+    class Meta:
+        model = PestDisease
+        fields = '__all__'
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Make fields more user-friendly for the target age group
+        self.fields['description'].widget = forms.Textarea(attrs={'rows': 3})
+        self.fields['symptoms'].widget = forms.Textarea(attrs={'rows': 3})
+        self.fields['prevention'].widget = forms.Textarea(attrs={'rows': 3})
+        self.fields['treatment'].widget = forms.Textarea(attrs={'rows': 3})
+
+class PlantPartForm(forms.ModelForm):
+    class Meta:
+        model = PlantPart
+        fields = '__all__'
+
 
 # class PlantTypeForm(forms.ModelForm):
 #     class Meta:

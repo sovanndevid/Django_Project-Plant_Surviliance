@@ -1,5 +1,41 @@
 from django.db import models
 from django.contrib.auth.models import User
+    
+    
+class PlantPart(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
+    
+    def __str__(self):
+        return self.name
+    
+class PestDisease(models.Model):
+    identifier = models.IntegerField(
+        null=False,
+        blank=False,
+        unique=True,
+        default=1,  # Temporary default for migration
+    )
+    name = models.CharField(max_length=100)
+    scientific_name = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
+    image_url = models.URLField(blank=True)  # Changed to URLField for better validation
+    image_reference = models.TextField(blank=True)
+    symptoms = models.TextField()
+    prevention = models.TextField()
+    treatment = models.TextField()
+    affected_parts = models.ManyToManyField(PlantPart)  # Changed to ManyToMany as a pest can affect multiple parts
+    recommended_frequency = models.CharField(max_length=100)
+    plant_type = models.CharField(max_length=100)  # Using CharField for now, can be ForeignKey if you create PlantType model
+    
+    def __str__(self):
+        return self.name
+
+
+
+
+
+
 
 
 

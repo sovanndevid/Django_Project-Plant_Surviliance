@@ -21,20 +21,22 @@ from django.contrib import admin
 from django.urls import re_path, path
 # Adding .views because it sits in app folder
 from pest_web import views
-from pest_web.views import HomeView, PestDiseaseListView, PestDiseaseDetailView, AboutView, register  # fixed class names
+from pest_web.views import HomeView, AboutView, PestDiseaseListView
+# from . import views
+# , PestDiseaseDetailView register  # fixed class names
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     re_path(r'^$', HomeView.as_view(), name='home'),
     re_path(r'^pests/$', PestDiseaseListView.as_view(), name='pest_list'), 
-    re_path(r'^pests/(?P<pk>\d+)/s*$', PestDiseaseDetailView.as_view(), name='pest_detail'),
+    # re_path(r'^pests/(?P<pk>\d+)/s*$', PestDiseaseDetailView.as_view(), name='pest_detail'),
     re_path(r'^about/$', AboutView.as_view(), name='about'),
 
     # Account
-    path('register/', views.register, name="register"),
+    # path('register/', views.register, name="register"),
 
-    # Login/Logout
-    path('login/', auth_views.LoginView.as_view(template_name='pests/login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),
+    # # Login/Logout
+    # path('login/', auth_views.LoginView.as_view(template_name='pests/login.html'), name='login'),
+    # path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),
 ]
