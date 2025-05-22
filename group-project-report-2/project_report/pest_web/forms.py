@@ -3,6 +3,8 @@ from .models import PlantType, PlantPart, Plant, PestDisease, SurveillanceRecord
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
+# --- Model Forms ---
+
 class PlantTypeForm(forms.ModelForm):
     class Meta:
         model = PlantType
@@ -53,7 +55,9 @@ class SurveillanceRecordForm(forms.ModelForm):
         widgets = {
             'plant': forms.Select(attrs={'class': 'form-control'}),
             'pest_disease': forms.Select(attrs={'class': 'form-control'}),
-            'date_time': forms.DateTimeInput(attrs={'type': 'datetime-local', 'class': 'form-control'}),
+            'date_time': forms.DateTimeInput(attrs={
+                'type': 'datetime-local', 'class': 'form-control'
+            }),
             'part_surveyed': forms.Select(attrs={'class': 'form-control'}),
             'result': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
             'notes': forms.Textarea(attrs={'class': 'form-control', 'rows': 2}),
@@ -64,12 +68,10 @@ class SurveillanceRecordForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         if user:
             self.fields['plant'].queryset = Plant.objects.filter(grower=user)
-            user_plant_types = Plant.objects.filter(
-                grower=user
-            ).values_list('plant_type', flat=True).distinct()
-            self.fields['pest_disease'].queryset = PestDisease.objects.filter(
-                plant_type__in=user_plant_types
-            )
+            user_plant_types = Plant.objects.filter(grower=user).values_list('plant_type', flat=True).distinct()
+            self.fields['pest_disease'].queryset = PestDisease.objects.filter(plant_type__in=user_plant_types)
+
+# --- User Registration Form ---
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control'}))
