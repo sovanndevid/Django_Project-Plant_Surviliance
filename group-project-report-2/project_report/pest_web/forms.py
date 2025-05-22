@@ -1,5 +1,7 @@
 from django import forms
 from .models import PestDisease, PlantPart, Farm
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 class PestDiseaseForm(forms.ModelForm):
     class Meta:

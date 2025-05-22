@@ -30,17 +30,7 @@ class PestDisease(models.Model):
     
     def __str__(self):
         return self.name
-
-
-
-
-
-
-
-
-
-
-
+    
 
 class Farm(models.Model):
     grower = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -50,6 +40,14 @@ class Farm(models.Model):
     
     def __str__(self):
         return f"{self.farm_name} ({self.grower.username})"
+
+
+
+
+
+
+
+
 
 
 # Dynamic lists

@@ -1,8 +1,8 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import PlantType, PlantPart, Farm
+from .models import PestDisease, PlantPart, Farm
 
-myModels = [PlantType, PlantPart, Farm]
+myModels = [PestDisease, PlantPart, Farm]
 admin.site.register(myModels)
 
