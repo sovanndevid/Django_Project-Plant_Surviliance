@@ -150,32 +150,32 @@ def get_pests_for_plant(request):
     return JsonResponse(data, safe=False)
  
 # Calculation View
-@login_required
-def calculate_surveillance(request):
-    if request.method == 'POST':
-        plant_id = request.POST.get('plant')
-        frequency = request.POST.get('frequency')
+# @login_required
+# def calculate_surveillance(request):
+#     if request.method == 'POST':
+#         plant_id = request.POST.get('plant')
+#         frequency = request.POST.get('frequency')
  
-        try:
-            plant = Plant.objects.get(id=plant_id, grower=request.user)
-            base_time = 2  # minutes per plant
-            if frequency == 'weekly':
-                multiplier = 4
-            elif frequency == 'monthly':
-                multiplier = 1
-            else:  # daily
-                multiplier = 28
+#         try:
+#             plant = Plant.objects.get(id=plant_id, grower=request.user)
+#             base_time = 2  # minutes per plant
+#             if frequency == 'weekly':
+#                 multiplier = 4
+#             elif frequency == 'monthly':
+#                 multiplier = 1
+#             else:  # daily
+#                 multiplier = 28
  
-            total_time = plant.number_of_plants * base_time * multiplier
-            return render(request, 'pests/surveillance_result.html', {
-                'plant': plant,
-                'total_time': total_time,
-                'time_period': frequency,
-            })
-        except Plant.DoesNotExist:
-            messages.error(request, "Plant not found")
-            return redirect('surveillance-create')
-    return redirect('home')
+#             total_time = plant.number_of_plants * base_time * multiplier
+#             return render(request, 'pests/surveillance_result.html', {
+#                 'plant': plant,
+#                 'total_time': total_time,
+#                 'time_period': frequency,
+#             })
+#         except Plant.DoesNotExist:
+#             messages.error(request, "Plant not found")
+#             return redirect('surveillance-create')
+#     return redirect('home')
 # About View
 class AboutView(TemplateView):
     template_name = 'pests/about.html'
