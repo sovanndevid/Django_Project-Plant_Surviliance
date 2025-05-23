@@ -19,11 +19,19 @@ class PestDiseaseListView(ListView):
     model = PestDisease
     template_name = 'pests/plist.html'
     context_object_name = 'pests'
-    # paginate_by = 7 
+    
     def get_queryset(self):
-        """Return the list of pests to display"""
-        return pests
+        """Return all pest diseases ordered by name"""
+        return PestDisease.objects.all().order_by('name')
 
+# Displaying individual pest disease
+class PestDiseaseDetailView(DetailView):
+    """Detail view for a single pest/disease"""
+    model = PestDisease
+    template_name = 'pests/details.html'
+    context_object_name = 'pest'
+    
+    
 # Displaying home page at localhost/ link 
 class HomeView(TemplateView):
     """Home page view"""

@@ -15,11 +15,11 @@
         {% for pest in pests %}
         
         <li class="list1"><br>
-            <a href="{% url "pest_list" pest.pk %}">{{ pest.name }} </a><br>
-            <p>             {{ pest.description }}
-            </p><br>
-            
-            <button onclick="location.href='{% url "pest_list" pest.pk %}'">Learn More ↣</button>
+            <a href="{% url 'pest_detail' pest.pk %}">{{ pest.name }}</a>
+            <br>
+                <p>{{ pest.description }}</p>
+            </br>
+            <button onclick="location.href='{% url 'pest_detail' pest.pk %}'">Learn More ↣</button>
         </li>
         {% endfor %}
     </ul>
