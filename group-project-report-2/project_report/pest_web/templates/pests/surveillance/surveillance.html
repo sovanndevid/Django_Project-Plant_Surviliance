@@ -1,0 +1,101 @@
+{% extends "pests/base.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+{% block content %}
+<div class="container">
+    <h2>Pest Surveillance Dashboard</h2>
+
+    <div> 
+        <nav class="record_functions" >
+            <a href="#">View</a>
+            <a href="#">Edit</a>
+            <a href="#">Add</a>
+            <a href="#">Delete</a>
+           </nav>
+    </div>
+    
+    <!-- Record List -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3>Your Records</h3>
+        </div>
+        <div class="card-body">
+            <div id="records-list">
+                {% include 'pests/surveillance/partials/records_list.html' %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Form Section -->
+    <div class="card">
+        <div class="card-header">
+            <h3 id="form-title">Create New Record</h3>
+        </div>
+        <div class="card-body">
+            <form id="surveillance-form">
+                {% csrf_token %}
+                <input type="hidden" id="record-id" value="">
+                
+                <div class="form-group">
+                    <label>Pest/Disease</label>
+                    <select class="form-control" id="pest-disease" required>
+                        <option value="">Select...</option>
+                        {% for pd in pest_diseases %}
+                        <option value="{{ pd.id }}">{{ pd.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Affected Plant Part</label>
+                    <select class="form-control" id="affected-part" required>
+                        <option value="">Select...</option>
+                        {% for part in plant_parts %}
+                        <option value="{{ part.id }}">{{ part.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Severity</label>
+                    <select class="form-control" id="severity" required>
+                        <option value="">Select...</option>
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Notes</label>
+                    <textarea class="form-control" id="notes" rows="3"></textarea>
+                </div>
+                
+                <button type="button" id="preview-btn" class="btn btn-info">Preview</button>
+                <button type="submit" id="submit-btn" class="btn btn-primary">Submit</button>
+                <button type="button" id="cancel-btn" class="btn btn-secondary" style="display:none;">Cancel</button>
+            </form>
+            
+            <!-- Preview Section -->
+            <div id="preview-section" class="mt-4" style="display:none;">
+                <h4>Preview</h4>
+                <div class="card">
+                    <div class="card-body">
+                        <p><strong>Pest/Disease:</strong> <span id="preview-pest"></span></p>
+                        <p><strong>Affected Part:</strong> <span id="preview-part"></span></p>
+                        <p><strong>Severity:</strong> <span id="preview-severity"></span></p>
+                        <p><strong>Notes:</strong> <span id="preview-notes"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/surveillance.js' %}"></script>
+{% endblock %}

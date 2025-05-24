@@ -42,7 +42,29 @@ class Farm(models.Model):
         return f"{self.farm_name} ({self.grower.username})"
 
 
+class SurveillanceRecord(models.Model):
+    farm = models.ForeignKey(Farm, on_delete=models.CASCADE)
+    pest_disease = models.ForeignKey(PestDisease, on_delete=models.CASCADE)
+    affected_plant_part = models.ForeignKey(PlantPart, on_delete=models.CASCADE)
+    severity = models.CharField(max_length=50, choices=[
+        ('low', 'Low'),
+        ('medium', 'Medium'),
+        ('high', 'High')
+    ])
+    notes = models.TextField(blank=True)
+    start_time = models.DateTimeField(auto_now_add=True)
+    end_time = models.DateTimeField(null=True, blank=True)
+    duration = models.DurationField(null=True, blank=True)
+    is_preview = models.BooleanField(default=False)
+    is_submitted = models.BooleanField(default=False)
 
+    def save(self, *args, **kwargs):
+        if self.end_time and self.start_time:
+            self.duration = self.end_time - self.start_time
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.farm} - {self.pest_disease}"
 
 
 

@@ -1,5 +1,5 @@
 from django import forms
-from .models import PestDisease, PlantPart, Farm
+from .models import PestDisease, PlantPart, Farm, SurveillanceRecord
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -33,6 +33,20 @@ class FarmForm(forms.ModelForm):
         model = Farm
         fields = ['farm_name', 'size_in_hectares', 'farm_type']
 
+class SurveillanceRecordForm(forms.ModelForm):
+    class Meta:
+        model = SurveillanceRecord
+        fields = ['pest_disease', 'affected_plant_part', 'severity', 'notes']
+        widgets = {
+            'notes': forms.Textarea(attrs={'rows': 3}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        if user and hasattr(user, 'farm'):
+            self.fields['pest_disease'].queryset = PestDisease.objects.all()
+            self.fields['affected_plant_part'].queryset = PlantPart.objects.all()
 # class PlantTypeForm(forms.ModelForm):
 #     class Meta:
 #         model = PlantType

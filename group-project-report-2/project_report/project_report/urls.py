@@ -21,16 +21,16 @@ from django.contrib import admin
 from django.urls import re_path, path
 # Adding .views because it sits in app folder
 from pest_web import views
-from pest_web.views import HomeView, AboutView, PestDiseaseListView, PestDiseaseDetailView, register, farm_profile,edit_farm
+from pest_web.views import HomeView, AboutView, PestDiseaseListView, PestDiseaseDetailView, register, farm_profile,edit_farm, SurveillanceDashboardView
 # from . import views
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # Main pages from navigational bar 
     re_path(r'^$', HomeView.as_view(), name='home'),
     re_path(r'^pests/$', PestDiseaseListView.as_view(), name='pest_list'), 
     re_path(r'^pests/(?P<pk>\d+)/s*$', PestDiseaseDetailView.as_view(), name='pest_detail'),
-    # re_path(r'^pests/(?P<pk>\d+)/s*$', PestDiseaseDetailView.as_view(), name='pest_detail'),
     re_path(r'^about/$', AboutView.as_view(), name='about'),
     
     
@@ -49,4 +49,6 @@ urlpatterns = [
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='pests/password_reset_confirm.html'), name='password_reset_confirm'),
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='pests/assword_reset_complete.html'), name='password_reset_complete'),
 
+    # Surveillance record - CRUD functionality and preview with only 1 URL
+    path('surveillance/', SurveillanceDashboardView.as_view(), name='surveillance_dashboard'),
 ]
