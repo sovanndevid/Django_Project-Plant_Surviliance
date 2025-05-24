@@ -1,0 +1,35 @@
+{% extends 'pests/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2 class="my-4">Pest Surveillance Dashboard</h2>
+    
+    {% if messages %}
+    <div class="mb-3">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Form Section -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3>{% if edit_record %}Edit Record{% else %}Create New Record{% endif %}</h3>
+        </div>
+        <div class="card-body">
+            {% include 'pests/surveillance/partials/records_form.html' %}
+        </div>
+    </div>
+
+    <!-- Records Table -->
+    <div class="card">
+        <div class="card-header">
+            <h3>Historical Records</h3>
+        </div>
+        <div class="card-body">
+            {% include 'pests/surveillance/partials/records_table.html' %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,63 @@
+<form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="action" value="{% if edit_record %}update{% else %}create{% endif %}">
+    {% if edit_record %}
+        <input type="hidden" name="record_id" value="{{ edit_record.id }}">
+    {% endif %}
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>{{ form.pest_disease.label }}</label>
+                {{ form.pest_disease }}
+                {% if form.pest_disease.errors %}
+                    <div class="invalid-feedback d-block">
+                        {{ form.pest_disease.errors }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>{{ form.affected_plant_part.label }}</label>
+                {{ form.affected_plant_part }}
+                {% if form.affected_plant_part.errors %}
+                    <div class="invalid-feedback d-block">
+                        {{ form.affected_plant_part.errors }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>{{ form.severity.label }}</label>
+                {{ form.severity }}
+                {% if form.severity.errors %}
+                    <div class="invalid-feedback d-block">
+                        {{ form.severity.errors }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label>{{ form.notes.label }}</label>
+        {{ form.notes }}
+        {% if form.notes.errors %}
+            <div class="invalid-feedback d-block">
+                {{ form.notes.errors }}
+            </div>
+        {% endif %}
+    </div>
+    
+    <button type="submit" class="btn btn-primary">
+        {% if edit_record %}Update{% else %}Create{% endif %} Record
+    </button>
+    {% if edit_record %}
+        <a href="{% url 'surveillance_dashboard' %}" class="btn btn-secondary">Cancel</a>
+    {% endif %}
+</form>

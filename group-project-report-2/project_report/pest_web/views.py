@@ -7,11 +7,12 @@ from django.contrib import messages
 from django.http import JsonResponse
 from django.db.models import Q
 from django.utils import timezone
+from django.urls import reverse 
 
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from .models import PestDisease, PlantPart, Farm
-from .forms import PestDiseaseForm, PlantPartForm, FarmForm, UserRegisterForm,SurveillanceRecord
+from .forms import PestDiseaseForm, PlantPartForm, FarmForm, UserRegisterForm, SurveillanceRecord, SurveillanceRecordForm
 
 
 # Displaying a list of 7 pest diseases
@@ -78,95 +79,68 @@ def edit_farm(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Farm updated.")
-            return redirect('pests/farm_profile')
+            return redirect('pests/farm_profile/')
     else:
         form = FarmForm(instance=farm)
     return render(request, 'pests/edit_farm.html', {'form': form})
 
 # Surveillance record 
-
 class SurveillanceDashboardView(LoginRequiredMixin, TemplateView):
-    template_name = 'pests/surveillance/surveillance.html'
+    template_name = 'pests/surveillance/surveillance_base.html' 
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['records'] = SurveillanceRecord.objects.filter(
+        records = SurveillanceRecord.objects.filter(
             farm=self.request.user.farm,
-            is_preview=False
-        )
-        context['pest_diseases'] = PestDisease.objects.all()
-        context['plant_parts'] = PlantPart.objects.all()
+        ).order_by('-created_at')
+        
+        edit_id = self.request.GET.get('edit')
+        if edit_id:
+            context['edit_record'] = get_object_or_404(SurveillanceRecord, pk=edit_id, farm=self.request.user.farm)
+            context['form'] = SurveillanceRecordForm(
+                instance=context['edit_record'],
+                user=self.request.user
+            )
+        else:
+            context['form'] = SurveillanceRecordForm(user=self.request.user)
+        
+        context['records'] = records
         return context
     
     def post(self, request, *args, **kwargs):
         action = request.POST.get('action')
-        record_id = request.POST.get('record_id')
         
         if action == 'create':
-            return self._handle_create(request)
-        elif action == 'update':
-            return self._handle_update(request, record_id)
-        elif action == 'delete':
-            return self._handle_delete(request, record_id)
-        elif action == 'preview':
-            return self._handle_preview(request)
-        return JsonResponse({'status': 'error', 'message': 'Invalid action'})
-    
-    def _handle_create(self, request):
-        form_data = {
-            'farm': request.user.farm,
-            'pest_disease_id': request.POST.get('pest_disease'),
-            'affected_plant_part_id': request.POST.get('affected_plant_part'),
-            'severity': request.POST.get('severity'),
-            'notes': request.POST.get('notes'),
-            'is_preview': False
-        }
-        record = SurveillanceRecord.objects.create(**form_data)
-        return JsonResponse({
-            'status': 'success',
-            'record': self._serialize_record(record)
-        })
-    
-    def _handle_update(self, request, record_id):
-        record = get_object_or_404(SurveillanceRecord, id=record_id, farm=request.user.farm)
-        record.pest_disease_id = request.POST.get('pest_disease')
-        record.affected_plant_part_id = request.POST.get('affected_plant_part')
-        record.severity = request.POST.get('severity')
-        record.notes = request.POST.get('notes')
-        record.save()
-        return JsonResponse({
-            'status': 'success', 
-            'record': self._serialize_record(record)
-        })
-    
-    def _handle_delete(self, request, record_id):
-        record = get_object_or_404(SurveillanceRecord, id=record_id, farm=request.user.farm)
-        record.delete()
-        return JsonResponse({'status': 'success'})
-    
-    def _handle_preview(self, request):
-        preview_data = {
-            'pest_disease': get_object_or_404(PestDisease, id=request.POST.get('pest_disease')).name,
-            'affected_plant_part': get_object_or_404(PlantPart, id=request.POST.get('affected_plant_part')).name,
-            'severity': dict(SurveillanceRecord.SEVERITY_CHOICES).get(request.POST.get('severity')),
-            'notes': request.POST.get('notes')
-        }
-        return JsonResponse({
-            'status': 'success',
-            'preview': preview_data
-        })
-    
-    def _serialize_record(self, record):
-        return {
-            'id': record.id,
-            'pest_disease': record.pest_disease.name,
-            'affected_plant_part': record.affected_plant_part.name,
-            'severity': record.get_severity_display(),
-            'notes': record.notes,
-            'created_at': record.created_at.strftime('%Y-%m-%d %H:%M')
-        }
- 
+            form = SurveillanceRecordForm(request.POST, user=request.user)
+            if form.is_valid():
+                record = form.save(commit=False)
+                record.farm = request.user.farm
+                record.is_submitted = True
+                record.end_time = timezone.now()
+                record.save()
+                messages.success(request, "Record created successfully!")
+            else:
+                for error in form.errors.values():
+                    messages.error(request, error)
         
+        elif action == 'update':
+            record_id = request.POST.get('record_id')
+            record = get_object_or_404(SurveillanceRecord, pk=record_id, farm=request.user.farm)
+            form = SurveillanceRecordForm(request.POST, instance=record, user=request.user)
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Record updated successfully!")
+            else:
+                for error in form.errors.values():
+                    messages.error(request, error)
+        
+        elif action == 'delete':
+            record_id = request.POST.get('record_id')
+            record = get_object_or_404(SurveillanceRecord, pk=record_id, farm=request.user.farm)
+            record.delete()
+            messages.success(request, "Record deleted successfully!")
+        
+        return redirect(reverse('surveillance_dashboard'))
 # from .forms import (
 #     PlantTypeForm,
 #     PlantPartForm,
