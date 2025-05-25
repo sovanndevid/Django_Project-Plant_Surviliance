@@ -21,7 +21,7 @@ from django.contrib import admin
 from django.urls import re_path, path
 # Adding .views because it sits in app folder
 from pest_web import views
-from pest_web.views import HomeView, AboutView, PestDiseaseListView, PestDiseaseDetailView, register, farm_profile,edit_farm, SurveillanceDashboardView
+from pest_web.views import HomeView, AboutView, PestDiseaseListView, PestDiseaseDetailView, register, farm_profile,edit_farm, SurveillanceDashboardView, TreeDashboardView
 # from . import views
 from django.contrib.auth import views as auth_views
 
@@ -51,4 +51,5 @@ urlpatterns = [
 
     # Surveillance record - CRUD functionality and preview with only 1 URL
     path('surveillance/', SurveillanceDashboardView.as_view(), name='surveillance_dashboard'),
+    path('trees/', TreeDashboardView.as_view(), name='tree_dashboard'),
 ]

@@ -8,7 +8,14 @@ class PlantPart(models.Model):
     
     def __str__(self):
         return self.name
+
+class PlantType(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
     
+    def __str__(self):
+        return self.name
+        
 class PestDisease(models.Model):
     identifier = models.IntegerField(
         null=False,
@@ -26,7 +33,7 @@ class PestDisease(models.Model):
     treatment = models.TextField()
     affected_parts = models.ManyToManyField(PlantPart)  # Changed to ManyToMany as a pest can affect multiple parts
     recommended_frequency = models.CharField(max_length=100)
-    plant_type = models.CharField(max_length=100)  # Using CharField for now, can be ForeignKey if you create PlantType model
+    plant_type = models.ForeignKey(PlantType, on_delete=models.SET_NULL, null=True, blank=True) # Using CharField for now, can be ForeignKey if you create PlantType model
     
     def __str__(self):
         return self.name
@@ -41,6 +48,22 @@ class Farm(models.Model):
     def __str__(self):
         return f"{self.farm_name} ({self.grower.username})"
 
+# Tree reference
+class Tree(models.Model):
+    farm = models.ForeignKey(Farm, on_delete=models.CASCADE)
+    tag_number = models.CharField(max_length=50, unique=True)
+    variety = models.CharField(max_length=100, blank=True)
+    planting_date = models.DateField(null=True, blank=True)
+    location_description = models.TextField(blank=True)
+    notes = models.TextField(blank=True)
+    
+    class Meta:
+        ordering = ['tag_number']
+        verbose_name = "Tree"
+        verbose_name_plural = "Trees"
+    
+    def __str__(self):
+        return f"Tree {self.tag_number} ({self.farm})"
 
 class SurveillanceRecord(models.Model):
     SEVERITY_CHOICES = [
@@ -57,7 +80,8 @@ class SurveillanceRecord(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     time_spent = models.DurationField(null=True, blank=True)
-    
+    # added to include tree reference 
+    tree = models.ForeignKey(Tree, on_delete=models.CASCADE, null=True, blank=True)
     class Meta:
         ordering = ['-created_at']  # Newest records first
         verbose_name = "Surveillance Record"
@@ -72,6 +96,7 @@ class SurveillanceRecord(models.Model):
             'medium': 'warning',
             'high': 'danger'
         }.get(self.severity, 'secondary')
+
 
 
 

@@ -3,6 +3,12 @@
 {% block content %}
 <div class="container">
     <h2 class="my-4">Pest Surveillance Dashboard</h2>
+        {% if request.resolver_match.url_name == 'tree_dashboard' %}
+            Tree Management
+        {% else %}
+            Pest Surveillance Dashboard
+        {% endif %}
+    </h2>
     
     {% if messages %}
     <div class="mb-3">
@@ -12,7 +18,20 @@
     </div>
     {% endif %}
 
-    <!-- Form Section -->
+    <!-- Navigation Buttons -->
+    <div class="mb-4">
+        <a href="{% url 'tree_dashboard' %}" class="btn {% if request.resolver_match.url_name == 'tree_dashboard' %}btn-primary{% else %}btn-outline-primary{% endif %}">
+            Tree Management
+        </a>
+        <a href="{% url 'surveillance_dashboard' %}" class="btn {% if request.resolver_match.url_name == 'surveillance_dashboard' %}btn-primary{% else %}btn-outline-primary{% endif %}">
+            Surveillance Records
+        </a>
+    </div>
+
+    {% if request.resolver_match.url_name == 'tree_dashboard' %}
+    {% include 'pests/surveillance/partials/tree_management.html' %}
+{% else %}
+    <!-- Existing surveillance content -->
     <div class="card mb-4">
         <div class="card-header">
             <h3>{% if edit_record %}Edit Record{% else %}Create New Record{% endif %}</h3>
@@ -22,7 +41,6 @@
         </div>
     </div>
 
-    <!-- Records Table -->
     <div class="card">
         <div class="card-header">
             <h3>Historical Records</h3>
@@ -31,5 +49,6 @@
             {% include 'pests/surveillance/partials/records_table.html' %}
         </div>
     </div>
+{% endif %}
 </div>
 {% endblock %}

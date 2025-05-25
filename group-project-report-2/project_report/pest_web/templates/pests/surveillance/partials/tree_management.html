@@ -1,0 +1,71 @@
+<!-- pests/surveillance/partials/tree_management.html -->
+<div class="card mb-4">
+    <div class="card-header">
+        <h3>{% if edit_tree %}Edit Tree{% else %}Add New Tree{% endif %}</h3>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            
+            {% if edit_tree %}
+                <input type="hidden" name="action" value="update_tree">
+                <input type="hidden" name="tree_id" value="{{ edit_tree.id }}">
+            {% else %}
+                <input type="hidden" name="action" value="create_tree">
+            {% endif %}
+            
+            {{ tree_form.as_p }}
+            
+            <button type="submit" class="btn btn-primary">
+                {% if edit_tree %}Update{% else %}Create{% endif %} Tree
+            </button>
+            
+            {% if edit_tree %}
+                <a href="{% url 'tree_dashboard' %}" class="btn btn-secondary">Cancel</a>
+            {% endif %}
+        </form>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h3>Your Trees</h3>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Tag Number</th>
+                        <th>Variety</th>
+                        <th>Location</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tree in trees %}
+                    <tr>
+                        <td>{{ tree.tag_number }}</td>
+                        <td>{{ tree.variety }}</td>
+                        <td>{{ tree.location_description }}</td>
+                        <td>
+                            <a href="?edit_tree={{ tree.id }}" class="btn btn-sm btn-warning">Edit</a>
+                            <form method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="action" value="delete_tree">
+                                <input type="hidden" name="tree_id" value="{{ tree.id }}">
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Delete this tree?')">Delete</button>
+                            </form>
+                            <a href="{% url 'surveillance_dashboard' %}?tree={{ tree.id }}" class="btn btn-sm btn-info">Add Record</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4">No trees registered yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
