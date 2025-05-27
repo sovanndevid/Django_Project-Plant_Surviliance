@@ -1,12 +1,9 @@
-document.addEventListener("DOMContentLoaded", () =>{
-
-    
-    const toggelBtn = document.getElementById('big');
-    const navLinks = document.getElementById('edit');
-    
-    toggelBtn.addEventListener('click',()=>{
-        navLinks.classList.toggle('show');
-});
-
-});
-
+document.addEventListener("DOMContentLoaded", () => {
+    const hamburger = document.querySelector(".hamburger");
+    const nav = document.querySelector(".nav");
+  
+    hamburger.addEventListener("click", () => {
+      nav.classList.toggle("show");
+    });
+  });
+  

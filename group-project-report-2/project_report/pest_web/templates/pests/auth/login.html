@@ -1,27 +1,43 @@
 {% extends "pests/base.html" %}
 {% load static %}
+{% load widget_tweaks %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-{% endblock css %}
+  <link rel="stylesheet" href="{% static 'css/auth/login.css' %}">
+{% endblock %}
 
 {% block content %}
-<div class="login-container">
-  <h2>Login</h2>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-sm p-4">
+        <h2 class="text-center mb-4 text-success fw-bold">Login</h2>
+        <form method="post" novalidate>
+          {% csrf_token %}
 
-  <form method="post" class="login-form">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
-  </form>
+          {% for field in form %}
+            <div class="mb-3">
+              <label for="{{ field.id_for_label }}" class="form-label fw-semibold">{{ field.label }}</label>
+              {% render_field field class="form-control" placeholder=field.label %}
+              {% if field.errors %}
+                <div class="text-danger small mt-1">{{ field.errors|striptags }}</div>
+              {% endif %}
+            </div>
+          {% endfor %}
 
-  {% if form.errors %}
-    <div class="error-message">
-      {{ form.errors }}
+          <div class="d-grid">
+            <button type="submit" class="btn btn-success">Login</button>
+          </div>
+        </form>
+
+        <p class="text-center mt-3 small">
+          Don’t have an account? <a href="{% url 'register' %}" class="text-success fw-bold">Register here</a>.
+        </p>
+        <p class="text-center small">
+          <a href="{% url 'password_reset' %}" class="text-secondary">Forgot your password?</a>
+        </p>
+      </div>
     </div>
-  {% endif %}
-
-  <p>Don't have an account? <a href="{% url 'register' %}">Register here</a>.</p>
-  <p><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
+  </div>
 </div>
 {% endblock %}

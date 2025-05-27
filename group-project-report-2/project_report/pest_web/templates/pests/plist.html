@@ -1,29 +1,33 @@
 {% extends "pests/base.html" %}
 {% load static %}
-
-{% block css %}
-    <link rel="stylesheet" href="{% static "css/style.css" %}">
-{% endblock css %}
-
+<link rel="stylesheet" href="{% static 'css/plist.css' %}" />
 {% block content %}
-<div class="zero">
- 
-    
-    <h2 class="head1">Common Threats to Mango Health</h2>
-    <ul class="box">
+<section class="pest-list container my-5">
+  <h2 class="text-center text-primary fw-bold mb-4">Explore the 7 Plant Pests & Diseases</h2>
 
-        {% for pest in pests %}
-        
-        <li class="list1"><br>
-            <a href="{% url 'pest_detail' pest.pk %}">{{ pest.name }}</a>
-            <br>
-                <p>{{ pest.description }}</p>
-            </br>
-            <button onclick="location.href='{% url 'pest_detail' pest.pk %}'">Learn More ↣</button>
-        </li>
-        {% endfor %}
-    </ul>
+  <!-- Search bar -->
+  <div class="row justify-content-center mb-4">
+    <div class="col-md-6">
+      <form method="get" class="d-flex">
+        <input type="text" name="q" class="form-control me-2" placeholder="Search pests..." value="{{ request.GET.q }}">
+        <button type="submit" class="btn btn-primary">Search</button>
+      </form>
+    </div>
+  </div>
 
-    
-</div>
+  <!-- Pest list -->
+  <div class="row g-3">
+    {% for pest in pests %}
+      <div class="col-md-4">
+        <div class="card shadow-sm border-0 h-100 p-3">
+          <h5 class="card-title text-success">{{ pest.name }}</h5>
+          <p class="card-text text-muted small">{{ pest.scientific_name }}</p>
+          <a href="{% url 'pest_detail' pest.pk %}" class="btn btn-sm btn-outline-primary mt-2">View Details</a>
+        </div>
+      </div>
+    {% empty %}
+      <p class="text-center text-muted">No pests found matching your search.</p>
+    {% endfor %}
+  </div>
+</section>
 {% endblock %}

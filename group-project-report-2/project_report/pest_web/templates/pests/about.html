@@ -1,40 +1,51 @@
 {% extends "pests/base.html" %}
 {% load static %}
-{% block css%}
-<link rel="stylesheet" href="{%static 'css/style.css'%}">
-{% endblock %}
+<link rel="stylesheet" href="{% static 'css/about.css' %}" />
 {% block content %}
+<!-- Hero Section with Solid Color, Rounded Edges, and Shadow -->
+<section class="about-hero text-center d-flex align-items-center justify-content-center shadow-sm mx-3 my-4 rounded-4">
+  <div class="container py-5 px-4">
+    <h1 class="fw-bold mb-3">Our Group: Passionate About Plant Health</h1>
+    <p class="lead mb-0">Dedicated to making a difference in the world of agriculture and sustainable farming practices.</p>
+  </div>
+</section>
 
-<section class="zero">
-    <h1 class="newone">Our Group: Passionate About Plant Health</h1>
-    <div>
-        <img src="{% static 'images/view.png' %}" alt="" class="ground">
+<!-- Our Goal Section -->
+<section class="container my-5">
+  <h2 class="fw-bold text-success mb-3">Our Goal</h2>
+  <p>
+    Our project aims to raise awareness about common pests and diseases in mango cultivation. We strive to provide valuable information and tools to help growers identify threats and ensure plant health. By collaborating and sharing knowledge, we contribute to a healthier agricultural ecosystem.
+  </p>
+</section>
+
+<!-- Meet Our Team Section -->
+<section class="container my-5">
+  <h2 class="fw-bold text-success mb-3">Meet Our Team</h2>
+  <div class="row g-3">
+    <div class="col-md-3">
+      <div class="card shadow-sm border-0 text-center p-3">
+        <h5 class="fw-bold">Kristina</h5>
+        <p>Student ID: <b>S383588</b></p>
+      </div>
     </div>
-    <div class="about1">
-        <div class="friends">
-            <div class="friend1">
-                <h3>Kristina</h3>
-                <p>Student ID: <b>S383588</b></p>
-            </div>
-        
-            <div class="friend1">
-                <h3>Stuti Thapaliya</h3>
-                <p>Student ID: <b>S368836</b></p>
-            </div>
-        
-            <div class="friend1">
-                <h3>Devid Nong</h3>
-                <p>Student ID: <b>S360937</b></p>
-            </div>
-        
-            <div class="friend1">
-                <h3>Mey Heng</h3>
-                <p>Student ID: <b>S360721</b></p>
-            </div>
-        </div>
-        
-
+    <div class="col-md-3">
+      <div class="card shadow-sm border-0 text-center p-3">
+        <h5 class="fw-bold">Stuti Thapaliya</h5>
+        <p>Student ID: <b>S368836</b></p>
+      </div>
     </div>
-
+    <div class="col-md-3">
+      <div class="card shadow-sm border-0 text-center p-3">
+        <h5 class="fw-bold">Devid Nong</h5>
+        <p>Student ID: <b>S360937</b></p>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card shadow-sm border-0 text-center p-3">
+        <h5 class="fw-bold">Mey Heng</h5>
+        <p>Student ID: <b>S360721</b></p>
+      </div>
+    </div>
+  </div>
 </section>
 {% endblock %}

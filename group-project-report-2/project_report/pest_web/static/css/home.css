@@ -1,0 +1,118 @@
+/* Base and general styles */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+  }
+  
+  /* Hero section styling */
+  .hero-section {
+    background: linear-gradient(135deg, #f0f4f8, #d9f0e3);
+    border-radius: 12px;
+    padding: 3rem 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .hero-box {
+    background: #ffffff;
+    border-left: 4px solid #007BFF;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+  
+  .hero-title {
+    color: #1e3a5f;
+    font-size: 2rem;
+    font-weight: 700;
+  }
+  
+  .hero-description {
+    font-size: 1rem;
+    color: #444;
+    margin-bottom: 1rem;
+  }
+  
+  .hero-section .btn-primary {
+    background-color: #ff9800;
+    border-color: #ff9800;
+    font-weight: 600;
+  }
+  
+  .hero-section .btn-primary:hover {
+    background-color: #fb8c00;
+    border-color: #fb8c00;
+  }
+  
+  .hero-section .btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+    font-weight: 600;
+  }
+  
+  .hero-section .btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+  }
+  
+  .hero-section .btn-outline-primary,
+  .hero-section .btn-outline-secondary {
+    font-weight: 600;
+    border-width: 2px;
+  }
+  
+  /* Image grid */
+  .hero-section .row.g-3 .col-6 img {
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+  }
+  
+  .hero-section .row.g-3 .col-6 img:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Responsiveness for smaller devices */
+  @media (max-width: 768px) {
+    .hero-title {
+      font-size: 1.6rem;
+    }
+  
+    .hero-box {
+      padding: 1rem;
+    }
+  
+    .hero-description {
+      font-size: 0.9rem;
+    }
+  
+    .hero-section .row.g-3 {
+      display: flex;
+      flex-wrap: wrap;
+    }
+  
+    .hero-section .row.g-3 .col-6 {
+      flex: 1 1 100%;
+      max-width: 100%;
+      margin-bottom: 1rem;
+    }
+  
+    .hero-section .row.g-3 .col-6 img {
+      width: 100%;
+      height: auto;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .hero-title {
+      font-size: 1.4rem;
+    }
+  
+    .hero-description {
+      font-size: 0.85rem;
+    }
+  
+    .hero-section .btn {
+      width: 100%;
+      margin-bottom: 0.5rem;
+    }
+  }
+  

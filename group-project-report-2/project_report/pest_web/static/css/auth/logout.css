@@ -1,0 +1,28 @@
+body {
+    background-color: #f8f9fa;
+  }
+  
+  .logout-message {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  .btn-success {
+    background-color: #198754;
+    border: none;
+  }
+  
+  .btn-success:hover {
+    background-color: #157347;
+  }
+  
+  .btn-outline-success {
+    border-color: #198754;
+    color: #198754;
+  }
+  
+  .btn-outline-success:hover {
+    background-color: #198754;
+    color: #ffffff;
+  }
+  

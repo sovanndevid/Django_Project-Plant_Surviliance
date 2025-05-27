@@ -1,45 +1,76 @@
 {% extends "pests/base.html" %}
 {% load static %}
-
-{% block css %}
-<link rel="stylesheet" href="{% static 'css/style.css' %}">
-{% endblock %}
-
+<link rel="stylesheet" href="{% static 'css/details.css' %}" />
 {% block content %}
-<div class="zero">
-  <div class="detail">
-    <!-- Text section -->
-    <div class="yes">
-      <h1>{{ pest.name }}: Identification, Impact & Prevention</h1>
-      <p>{{ pest.description }}</p>
+<section class="container my-5 pest-detail">
+  <div class="row g-4 align-items-center">
+    <div class="col-md-6">
+      <h2 class="text-success fw-bold">{{ pest.name }}</h2>
+      <p class="text-muted fst-italic">{{ pest.scientific_name }}</p>
 
-      <div class="info-block">
-        <h3>Binomial Name</h3>
-        <p class="italic">{{ pest.scientific_name }}</p>
+      <div class="mb-3 d-flex align-items-start">
+        <span class="me-2"><i class="bi bi-info-circle-fill text-primary"></i></span>
+        <div>
+          <strong>Description:</strong>
+          <p>{{ pest.description }}</p>
+        </div>
       </div>
 
-      <div class="info-block">
-        <h3>Symptoms</h3>
-        <p>{{ pest.symptoms|linebreaks }}</p>
+      <div class="mb-3 d-flex align-items-start">
+        <span class="me-2"><i class="bi bi-bug-fill text-danger"></i></span>
+        <div>
+          <strong>Symptoms:</strong>
+          <p>{{ pest.symptoms }}</p>
+        </div>
       </div>
 
-      <div class="info-block">
-        <h3>Prevention</h3>
-        <p>{{ pest.prevention|linebreaks }}</p>
+      <div class="mb-3 d-flex align-items-start">
+        <span class="me-2"><i class="bi bi-shield-check text-success"></i></span>
+        <div>
+          <strong>Prevention:</strong>
+          <p>{{ pest.prevention }}</p>
+        </div>
       </div>
 
-      <div class="info-block">
-        <h3>Treatment</h3>
-        <p>{{ pest.treatment|linebreaks }}</p>
+      <div class="mb-3 d-flex align-items-start">
+        <span class="me-2"><i class="bi bi-capsule text-warning"></i></span>
+        <div>
+          <strong>Treatment:</strong>
+          <p>{{ pest.treatment }}</p>
+        </div>
       </div>
+
+      <div class="mb-3 d-flex align-items-start">
+        <span class="me-2"><i class="bi bi-calendar-week text-info"></i></span>
+        <div>
+          <strong>Recommended Surveillance Frequency:</strong>
+          <p>{{ pest.recommended_frequency }}</p>
+        </div>
+      </div>
+
+      <div class="mb-3 d-flex align-items-start">
+        <span class="me-2"><i class="bi bi-tree-fill text-success"></i></span>
+        <div>
+          <strong>Affected Parts:</strong>
+          <ul class="list-unstyled mb-0">
+            {% for part in pest.affected_parts.all %}
+              <li>🌿 {{ part.name }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+
+      <a href="{% url 'pest_list' %}" class="btn btn-outline-primary mt-3">Back to List</a>
     </div>
-    <!-- Image section -->
-    <div class="yes1">
-        <a href="{{ pest.image_reference }}" target="_blank">
-          <img src="{% static pest.image_url %}" alt="{{ pest.name }}" width="400" class="detail-image">
 
-        </a>
+    <div class="col-md-6 text-center">
+      {% if pest.image_url %}
+  <img src="{% static pest.image_url %}" alt="{{ pest.name }}" class="img-fluid rounded shadow-sm">
+{% else %}
+  <img src="{% static 'images/placeholder.png' %}" alt="No image" class="img-fluid rounded shadow-sm">
+{% endif %}
+
     </div>
   </div>
-</div>
+</section>
 {% endblock %}

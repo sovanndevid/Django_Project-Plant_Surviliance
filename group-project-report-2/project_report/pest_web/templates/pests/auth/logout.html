@@ -1,6 +1,20 @@
 {% extends "pests/base.html" %}
+{% load static %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/auth/logout.css' %}">
+{% endblock %}
 
 {% block content %}
-  <h2>You have been logged out successfully.</h2>
-  <p><a href="{% url 'login' %}">Login again</a> or <a href="{% url 'home' %}">return to home page</a>.</p>
+<div class="container text-center py-5">
+  <div class="logout-message p-4 shadow-sm rounded bg-white">
+    <h2 class="text-success fw-bold mb-3">You have been logged out successfully.</h2>
+    <p class="mb-4">Thank you for using PlantShield. You can log in again or return to the homepage.</p>
+
+    <div class="d-flex justify-content-center gap-3">
+      <a href="{% url 'login' %}" class="btn btn-success fw-semibold">Login Again</a>
+      <a href="{% url 'home' %}" class="btn btn-outline-success fw-semibold">Return Home</a>
+    </div>
+  </div>
+</div>
 {% endblock %}
