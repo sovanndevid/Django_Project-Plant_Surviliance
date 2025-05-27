@@ -21,9 +21,10 @@ from django.contrib import admin
 from django.urls import re_path, path
 # Adding .views because it sits in app folder
 from pest_web import views
-from pest_web.views import HomeView, AboutView, PestDiseaseListView, PestDiseaseDetailView, register, farm_profile,edit_farm, SurveillanceDashboardView, TreeDashboardView
+from pest_web.views import HomeView, AboutView, PestDiseaseListView, PestDiseaseDetailView, register, SurveillanceDashboardView, TreeDashboardView
 # from . import views
 from django.contrib.auth import views as auth_views
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -36,19 +37,23 @@ urlpatterns = [
     
     # Log in/ Log out
     path('register/', views.register, name='register'),
-    path('login/', auth_views.LoginView.as_view(template_name='pests/login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(next_page='pests/login'), name='logout'),
+    path('login/', auth_views.LoginView.as_view(template_name='pests/auth/login.html',  next_page='surveillance_dashboard'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(next_page='logged_out'), name='logout'),
+    path('logged_out/', TemplateView.as_view(template_name='pests/auth/logout.html'), name='logged_out'),
 
-    # Farm profile and editing
-    path('farm/', views.farm_profile, name='pests/farm_profile'),
-    path('farm/edit/', views.edit_farm, name='pests/edit_farm'),
 
-    # Password reset (Django built-in)
-    path('password-reset/', auth_views.PasswordResetView.as_view(template_name='pests/password_reset.html'), name='password_reset'),
-    path('password-reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='pests/password_reset_done.html'), name='password_reset_done'),
-    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='pests/password_reset_confirm.html'), name='password_reset_confirm'),
-    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='pests/assword_reset_complete.html'), name='password_reset_complete'),
+    
+    # Password
+    path('password-reset/', auth_views.PasswordResetView.as_view(template_name='pests/auth/password_reset.html'), name='password_reset'),
+    path('password-reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='pests/auth/password_reset_done.html'), name='password_reset_done'),
+    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='pests/auth/password_reset_confirm.html'), name='password_reset_confirm'),
+    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='pests/auth/password_reset_complete.html'), name='password_reset_complete'),
+    
+    # User profile
+   path('profile/', views.UserProfileView.as_view(), name='user_profile'),
+   path('dashboard/', views.DashboardManagementView.as_view(), name='dashboard_management'),
 
+    
     # Surveillance record - CRUD functionality and preview with only 1 URL
     # path('surveillance/', SurveillanceDashboardView.as_view(), name='surveillance_dashboard'),
     # path('trees/', TreeDashboardView.as_view(), name='tree_dashboard'),

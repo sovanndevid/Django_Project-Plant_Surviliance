@@ -1,0 +1,44 @@
+{% extends "pests/base.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+  <h1 class="text-center">Dashboard</h1>
+  
+  {% if farm %}
+  <div class="dashboard-summary">
+    <h2>Farm Information</h2>
+    <p><strong>Name:</strong> {{ farm.farm_name }}</p>
+    <p><strong>Size:</strong> {{ farm.size_in_hectares }} hectares</p>
+    <p><strong>Type:</strong> {{ farm.farm_type }}</p>
+  </div>
+
+  <div class="dashboard-stats">
+    <h2>Surveillance Stats</h2>
+    <p><strong>Surveillance Records:</strong> {{ num_records }}</p>
+    <p><strong>Total Trees:</strong> {{ num_trees }}</p>
+    
+    {% if last_record %}
+    <h3>Last Surveillance Record</h3>
+    <p><strong>Pest/Disease:</strong> {{ last_record.pest_disease.name }}</p>
+    <p><strong>Severity:</strong> {{ last_record.severity }}</p>
+    <p><strong>Date:</strong> {{ last_record.created_at|date:"Y-m-d H:i" }}</p>
+    {% else %}
+    <p>No surveillance records found yet.</p>
+    {% endif %}
+  </div>
+  
+  <div class="dashboard-actions mt-4">
+    <a href="{% url 'surveillance_dashboard' %}" class="btn btn-primary">View Surveillance Records</a>
+    <a href="{% url 'tree_dashboard' %}" class="btn btn-secondary">Manage Trees</a>
+    <a href="{% url 'user_profile' %}" class="btn btn-outline-dark">Edit Profile</a>
+  </div>
+  {% else %}
+  <p class="text-danger">You do not have a farm profile set up. Please <a href="{% url 'register' %}">create one here</a>.</p>
+  {% endif %}
+</div>
+{% endblock %}

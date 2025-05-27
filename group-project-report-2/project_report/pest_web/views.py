@@ -1,5 +1,7 @@
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
+from django.views import View  
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
@@ -7,13 +9,12 @@ from django.contrib import messages
 from django.http import JsonResponse
 from django.db.models import Q
 from django.utils import timezone
-from django.urls import reverse 
+from django.urls import reverse
 from django.core.exceptions import ObjectDoesNotExist
 
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
 from .models import PestDisease, PlantPart, Farm, SurveillanceRecord, Tree
-from .forms import PestDiseaseForm, PlantPartForm, FarmForm, UserRegisterForm, SurveillanceRecordForm, TreeForm
+from .forms import PestDiseaseForm, PlantPartForm, FarmForm, UserRegisterForm, SurveillanceRecordForm, TreeForm, UserProfileForm
+
 
 
 # Displaying a list of 7 pest diseases
@@ -43,7 +44,9 @@ class HomeView(TemplateView):
 class AboutView(TemplateView):
     """About page view"""
     template_name = 'pests/about.html'
-
+    
+    
+# User register
 
 def register(request):
     if request.method == 'POST':
@@ -61,30 +64,69 @@ def register(request):
         user_form = UserRegisterForm()
         farm_form = FarmForm()
     
-    return render(request, 'pests/register.html', {
+    return render(request, 'pests/auth/register.html', {
         'user_form': user_form,
         'farm_form': farm_form
     })
-# View for logged-in users to see their farm info
-@login_required
-def farm_profile(request):
-    farm = get_object_or_404(Farm, grower=request.user)
-    return render(request, 'pests/farm_profile.html', {'farm': farm})
 
-# Edit farm info
-@login_required
-def edit_farm(request):
-    farm = get_object_or_404(Farm, grower=request.user)
-    if request.method == 'POST':
-        form = FarmForm(request.POST, instance=farm)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Farm updated.")
-            return redirect('pests/farm_profile/')
-    else:
-        form = FarmForm(instance=farm)
-    return render(request, 'pests/edit_farm.html', {'form': form})
 
+
+# User Profile
+class UserProfileView(View):
+    def get(self, request):
+        user_form = UserProfileForm(instance=request.user)
+        farm = getattr(request.user, 'farm', None)
+        farm_form = FarmForm(instance=farm)
+        return render(request, 'pests/auth/user_profile.html', {
+            'user_form': user_form,
+            'farm_form': farm_form
+        })
+
+    def post(self, request):
+        user_form = UserProfileForm(request.POST, instance=request.user)
+        farm = getattr(request.user, 'farm', None)
+        farm_form = FarmForm(request.POST, instance=farm)
+        if user_form.is_valid() and farm_form.is_valid():
+            user_form.save()
+            farm = farm_form.save(commit=False)
+            farm.grower = request.user
+            farm.save()
+            messages.success(request, "Profile and farm details updated successfully!")
+            return redirect('user_profile')
+        return render(request, 'pests/auth/user_profile.html', {
+            'user_form': user_form,
+            'farm_form': farm_form
+        })
+# Dashboard
+
+class DashboardManagementView(TemplateView):
+    template_name = 'pests/auth/dashboard_management.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        farm = getattr(self.request.user, 'farm', None)
+        context['farm'] = farm
+        if farm:
+            context['num_records'] = SurveillanceRecord.objects.filter(farm=farm).count()
+            context['num_trees'] = Tree.objects.filter(farm=farm).count()
+            context['last_record'] = SurveillanceRecord.objects.filter(farm=farm).order_by('-created_at').first()
+        else:
+            context['num_records'] = 0
+            context['num_trees'] = 0
+            context['last_record'] = None
+        return context
+
+
+
+
+
+
+
+
+
+
+
+# Surveillance
 class SurveillanceDashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'pests/surveillance/surveillance_base.html' 
     # function is used to either approve or deny access to surveillance page
