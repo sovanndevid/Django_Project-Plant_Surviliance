@@ -71,19 +71,3 @@ class SurveillanceRecordForm(forms.ModelForm):
         if user and user.farm:
             self.fields['tree'].queryset = Tree.objects.filter(farm=user.farm)
  
- 
-#  25 05 2025 - Before tree reference expansion         
-# class SurveillanceRecordForm(forms.ModelForm):
-#     class Meta:
-#         model = SurveillanceRecord
-#         fields = ['pest_disease', 'affected_plant_part', 'severity', 'notes']
-#         widgets = {
-#             'notes': forms.Textarea(attrs={'rows': 3}),
-#         }
-
-#     def __init__(self, *args, **kwargs):
-#         user = kwargs.pop('user', None)
-#         super().__init__(*args, **kwargs)
-#         if user and hasattr(user, 'farm'):
-#             self.fields['pest_disease'].queryset = PestDisease.objects.all()
-#             self.fields['affected_plant_part'].queryset = PlantPart.objects.all()

@@ -8,6 +8,7 @@ from django.http import JsonResponse
 from django.db.models import Q
 from django.utils import timezone
 from django.urls import reverse 
+from django.core.exceptions import ObjectDoesNotExist
 
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
@@ -86,7 +87,21 @@ def edit_farm(request):
 
 class SurveillanceDashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'pests/surveillance/surveillance_base.html' 
+    # function is used to either approve or deny access to surveillance page
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return render(request, 'pests/surveillance/access_denied.html', status=403)
+            
+        try:
+            if not hasattr(request.user, 'farm'):
+                return render(request, 'pests/surveillance/access_denied.html')
+        except ObjectDoesNotExist:
+            messages.warning(request, "Farm profile not found.")
+            return redirect('register')
+        
+        return super().dispatch(request, *args, **kwargs)
     
+    # this function retrieves the data before executing post() function
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         
@@ -97,7 +112,7 @@ class SurveillanceDashboardView(LoginRequiredMixin, TemplateView):
         
         trees = Tree.objects.filter(farm=self.request.user.farm).order_by('tag_number')
         
-        # Handle edit case
+        # Handle edit case 
         edit_id = self.request.GET.get('edit')
         if edit_id:
             context['edit_record'] = get_object_or_404(SurveillanceRecord, pk=edit_id, farm=self.request.user.farm)
@@ -113,6 +128,7 @@ class SurveillanceDashboardView(LoginRequiredMixin, TemplateView):
         context['tree_form'] = TreeForm()  # Form for adding new trees
         return context
     
+    # Function only runs when a user submits form
     def post(self, request, *args, **kwargs):
         action = request.POST.get('action')
         
@@ -160,7 +176,7 @@ class SurveillanceDashboardView(LoginRequiredMixin, TemplateView):
         return redirect(reverse('surveillance_dashboard'))
     
 class TreeDashboardView(LoginRequiredMixin, TemplateView):
-    template_name = 'pests/surveillance/surveillance_base.html'  # We'll reuse this template
+    template_name = 'pests/surveillance/surveillance_base.html'  
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

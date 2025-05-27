@@ -21,12 +21,13 @@ class PestDisease(models.Model):
         null=False,
         blank=False,
         unique=True,
-        default=1,  # Temporary default for migration
+        default=1,
     )
     name = models.CharField(max_length=100)
     scientific_name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
-    image_url = models.URLField(blank=True)  # Changed to URLField for better validation
+    image_url = models.CharField(blank=True, max_length=250)
+    # image_url = models.URLField(blank=True)  # Changed to URLField for better validation
     image_reference = models.TextField(blank=True)
     symptoms = models.TextField()
     prevention = models.TextField()

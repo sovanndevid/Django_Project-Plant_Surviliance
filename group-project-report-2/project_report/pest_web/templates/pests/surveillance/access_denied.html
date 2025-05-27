@@ -1,0 +1,22 @@
+<!-- templates/access_denied.html -->
+{% extends 'pests/base.html' %}
+
+{% block content %}
+<div class="container text-center mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title">Access Denied</h2>
+            <p class="card-text">You need to be logged in to view this page.</p>
+            
+            <div class="d-flex justify-content-center gap-3 mt-4">
+                <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-primary">
+                    Log In
+                </a>
+                <a href="{% url 'register' %}" class="btn btn-outline-primary">
+                    Sign Up
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

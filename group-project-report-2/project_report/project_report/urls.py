@@ -50,6 +50,9 @@ urlpatterns = [
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='pests/assword_reset_complete.html'), name='password_reset_complete'),
 
     # Surveillance record - CRUD functionality and preview with only 1 URL
-    path('surveillance/', SurveillanceDashboardView.as_view(), name='surveillance_dashboard'),
-    path('trees/', TreeDashboardView.as_view(), name='tree_dashboard'),
+    # path('surveillance/', SurveillanceDashboardView.as_view(), name='surveillance_dashboard'),
+    # path('trees/', TreeDashboardView.as_view(), name='tree_dashboard'),
+    re_path(r'^surveillance/$', SurveillanceDashboardView.as_view(), name='surveillance_dashboard'),
+    re_path(r'^trees/$', TreeDashboardView.as_view(), name='tree_dashboard'),
+
 ]

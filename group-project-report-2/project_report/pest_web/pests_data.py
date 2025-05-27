@@ -1,3 +1,7 @@
+# Archive!
+# From objective one
+# Now implement into class PestDisease Model
+
 from dataclasses import dataclass
 from typing import List, Dict
 
