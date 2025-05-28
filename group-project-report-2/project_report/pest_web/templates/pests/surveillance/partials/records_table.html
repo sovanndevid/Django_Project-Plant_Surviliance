@@ -1,42 +1,45 @@
-<div class="table-responsive">
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Tree</th>
-                <th>Pest/Disease</th>
-                <th>Affected Part</th>
-                <th>Severity</th>
-                <th>Actions</th>
-            </tr>
+<div class="table-section p-4 rounded shadow-sm">
+    <div class="table-responsive">
+      <table class="table table-striped align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Date</th>
+            <th>Tree</th>
+            <th>Pest/Disease</th>
+            <th>Affected Part</th>
+            <th>Severity</th>
+            <th>Actions</th>
+          </tr>
         </thead>
         <tbody>
-            {% for record in records %}
-            <tr>
-                <td>{{ record.created_at|date:"Y-m-d" }}</td>
-                <td>{{ record.tree.tag_number|default:"N/A" }}</td>
-                <td>{{ record.pest_disease }}</td>
-                <td>{{ record.affected_plant_part }}</td>
-                <td>
-                    <span class="badge bg-{{ record.get_severity_class }}">
-                        {{ record.get_severity_display }}
-                    </span>
-                </td>
-                <td>
-                    <a href="?edit={{ record.id }}" class="btn btn-sm btn-warning">Edit</a>
-                    <form method="post" action="{% url 'surveillance_dashboard' %}" style="display: inline;">
-                        {% csrf_token %}
-                        <input type="hidden" name="action" value="delete">
-                        <input type="hidden" name="record_id" value="{{ record.id }}">
-                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
-                    </form>
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="6" class="text-center">No records found</td>
-            </tr>
-            {% endfor %}
+          {% for record in records %}
+          <tr>
+            <td>{{ record.created_at|date:"Y-m-d" }}</td>
+            <td>{{ record.tree.tag_number|default:"N/A" }}</td>
+            <td>{{ record.pest_disease }}</td>
+            <td>{{ record.affected_plant_part }}</td>
+            <td>
+              <span class="badge bg-{{ record.get_severity_class }}">
+                {{ record.get_severity_display }}
+              </span>
+            </td>
+            <td>
+              <a href="?edit={{ record.id }}" class="btn btn-sm btn-warning">Edit</a>
+              <form method="post" action="{% url 'surveillance_dashboard' %}" class="d-inline">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="delete">
+                <input type="hidden" name="record_id" value="{{ record.id }}">
+                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+              </form>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="6" class="text-center text-muted">No records found</td>
+          </tr>
+          {% endfor %}
         </tbody>
-    </table>
-</div>
+      </table>
+    </div>
+  </div>
+  

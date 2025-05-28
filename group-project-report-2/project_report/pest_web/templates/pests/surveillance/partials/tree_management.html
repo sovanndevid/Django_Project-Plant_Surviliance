@@ -4,7 +4,7 @@
         <h3>{% if edit_tree %}Edit Tree{% else %}Add New Tree{% endif %}</h3>
     </div>
     <div class="card-body">
-        <form method="post">
+        <form method="post" class="form-section">
             {% csrf_token %}
             
             {% if edit_tree %}

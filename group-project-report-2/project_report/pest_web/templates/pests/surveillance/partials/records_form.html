@@ -1,78 +1,59 @@
- <form method="post" action="{% url 'surveillance_dashboard' %}">
+<form method="post" action="{% url 'surveillance_dashboard' %}" class="form-section">
     {% csrf_token %}
-    
+  
     {% if edit_record %}
-        <input type="hidden" name="action" value="update">
-        <input type="hidden" name="record_id" value="{{ edit_record.id }}">
+      <input type="hidden" name="action" value="update">
+      <input type="hidden" name="record_id" value="{{ edit_record.id }}">
     {% else %}
-        <input type="hidden" name="action" value="create">
+      <input type="hidden" name="action" value="create">
     {% endif %}
-    
-    <div class="row">
-        <div class="col-md-6">
-            <div class="mb-3">
-                {{ form.tree.label_tag }}
-                {{ form.tree }}
-                {% if form.tree.errors %}
-                    <div class="invalid-feedback d-block">
-                        {{ form.tree.errors }}
-                    </div>
-                {% endif %}
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="mb-3">
-                {{ form.pest_disease.label_tag }}
-                {{ form.pest_disease }}
-                {% if form.pest_disease.errors %}
-                    <div class="invalid-feedback d-block">
-                        {{ form.pest_disease.errors }}
-                    </div>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-    
-    <div class="row">
-        <div class="col-md-6">
-            <div class="mb-3">
-                {{ form.affected_plant_part.label_tag }}
-                {{ form.affected_plant_part }}
-                {% if form.affected_plant_part.errors %}
-                    <div class="invalid-feedback d-block">
-                        {{ form.affected_plant_part.errors }}
-                    </div>
-                {% endif %}
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="mb-3">
-                {{ form.severity.label_tag }}
-                {{ form.severity }}
-                {% if form.severity.errors %}
-                    <div class="invalid-feedback d-block">
-                        {{ form.severity.errors }}
-                    </div>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-    
+  
     <div class="mb-3">
-        {{ form.notes.label_tag }}
-        {{ form.notes }}
-        {% if form.notes.errors %}
-            <div class="invalid-feedback d-block">
-                {{ form.notes.errors }}
-            </div>
-        {% endif %}
+      {{ form.tree.label_tag }}
+      {{ form.tree }}
+      {% if form.tree.errors %}
+        <div class="invalid-feedback d-block">{{ form.tree.errors }}</div>
+      {% endif %}
     </div>
-    
+  
+    <div class="mb-3">
+      {{ form.pest_disease.label_tag }}
+      {{ form.pest_disease }}
+      {% if form.pest_disease.errors %}
+        <div class="invalid-feedback d-block">{{ form.pest_disease.errors }}</div>
+      {% endif %}
+    </div>
+  
+    <div class="mb-3">
+      {{ form.affected_plant_part.label_tag }}
+      {{ form.affected_plant_part }}
+      {% if form.affected_plant_part.errors %}
+        <div class="invalid-feedback d-block">{{ form.affected_plant_part.errors }}</div>
+      {% endif %}
+    </div>
+  
+    <div class="mb-3">
+      {{ form.severity.label_tag }}
+      {{ form.severity }}
+      {% if form.severity.errors %}
+        <div class="invalid-feedback d-block">{{ form.severity.errors }}</div>
+      {% endif %}
+    </div>
+  
+    <div class="mb-3">
+      {{ form.notes.label_tag }}
+      {{ form.notes }}
+      {% if form.notes.errors %}
+        <div class="invalid-feedback d-block">{{ form.notes.errors }}</div>
+      {% endif %}
+    </div>
+  
     <button type="submit" class="btn btn-primary">
-        {% if edit_record %}Update{% else %}Create{% endif %} Record
+      {% if edit_record %}Update{% else %}Create{% endif %} Record
     </button>
-    
+  
     {% if edit_record %}
-        <a href="{% url 'surveillance_dashboard' %}" class="btn btn-secondary">Cancel</a>
+      <a href="{% url 'surveillance_dashboard' %}" class="btn btn-secondary ms-2">Cancel</a>
     {% endif %}
 </form>
+  

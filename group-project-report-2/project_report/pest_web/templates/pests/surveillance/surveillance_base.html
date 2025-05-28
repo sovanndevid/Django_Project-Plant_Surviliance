@@ -1,14 +1,16 @@
 {% extends 'pests/base.html' %}
+{% load static %}
 
 {% block content %}
+<link rel="stylesheet" href="{% static 'css/surveillance/record.css' %}" />
 <div class="container">
 
-    <h2 class="my-4">Pest Surveillance Dashboard</h2>
-        {% if request.resolver_match.url_name == 'tree_dashboard' %}
+    <h2 class="my-4 fw-bold">Pest Surveillance Dashboard</h2>
+        {% comment %} {% if request.resolver_match.url_name == 'tree_dashboard' %}
             Tree Management
         {% else %}
             Pest Surveillance Dashboard
-        {% endif %}
+        {% endif %} {% endcomment %}
     </h2>
     
     {% if messages %}

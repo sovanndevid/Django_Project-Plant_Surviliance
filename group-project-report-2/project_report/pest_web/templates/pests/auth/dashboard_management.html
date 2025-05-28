@@ -38,7 +38,7 @@
     <a href="{% url 'user_profile' %}" class="btn btn-outline-dark">Edit Profile</a>
   </div>
   {% else %}
-  <p class="text-danger">You do not have a farm profile set up. Please <a href="{% url 'register' %}">create one here</a>.</p>
+  <p>You do not have a farm profile set up. Please create one <a href="{% url 'register' %}">here</a>.</p>
   {% endif %}
 </div>
 {% endblock %}
