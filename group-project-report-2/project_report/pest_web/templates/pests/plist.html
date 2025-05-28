@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="{% static 'css/plist.css' %}" />
 {% block content %}
 <section class="pest-list container my-5">
-  <h2 class="text-center text-primary fw-bold mb-4">Explore the 7 Plant Pests & Diseases</h2>
+  <h2 class="text-center fw-bold mb-4">Explore the 7 Plant Pests & Diseases</h2>
 
   <!-- Search bar -->
   <div class="row justify-content-center mb-4">
@@ -20,7 +20,7 @@
     {% for pest in pests %}
       <div class="col-md-4">
         <div class="card shadow-sm border-0 h-100 p-3">
-          <h5 class="card-title text-success">{{ pest.name }}</h5>
+          <h5 class="card-title">{{ pest.name }}</h5>
           <p class="card-text text-muted small">{{ pest.scientific_name }}</p>
           <a href="{% url 'pest_detail' pest.pk %}" class="btn btn-sm btn-outline-primary mt-2">View Details</a>
         </div>
