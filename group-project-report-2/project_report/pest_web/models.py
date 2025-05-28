@@ -20,7 +20,7 @@ class PestDisease(models.Model):
     identifier = models.IntegerField(
         null=False,
         blank=False,
-        unique=True,
+        unique=False,
         default=1,
     )
     name = models.CharField(max_length=100)
